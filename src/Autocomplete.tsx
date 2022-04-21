@@ -10,22 +10,22 @@ import {
 const Root = styled.div`
   position: relative;
   width: 320px;
+  display: flex;
 `;
-
-interface IData {
-  name: string;
-  code: string;
-  suggestions: string[];
-}
+const SubmitButton = styled.input`
+  background-color: DodgerBlue;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 5px;
+`;
 interface autoCompleteProps {
   iconColor?: string;
   inputStyle?: React.CSSProperties;
   optionsStyle?: React.CSSProperties;
-
   data: any[];
 }
 interface iuser {
-  text:string;
+  text: string;
   suggestions: any[];
 }
 export const AutoComplete: FC<autoCompleteProps> = ({
@@ -43,17 +43,17 @@ export const AutoComplete: FC<autoCompleteProps> = ({
     let suggestions = [];
     if (value.length > 0) {
       const regex = new RegExp(`^${value}`, "i");
-      suggestions = data.sort().filter((v: IData) => regex.test(v.name));
+      suggestions = data.sort().filter((v) => regex.test(v));
     }
     setIsComponentVisible(true);
     setSearch({ text: value, suggestions });
   };
 
-  const suggestionSelected = (value: IData) => {
+  const suggestionSelected = (value: string) => {
     setIsComponentVisible(false);
 
     setSearch({
-      text: value.name,
+      text: value,
       suggestions: []
     });
   };
@@ -62,37 +62,24 @@ export const AutoComplete: FC<autoCompleteProps> = ({
 
   return (
     <Root>
-      <div
-        onClick={() => setIsComponentVisible(false)}
-        style={{
-          display: isComponentVisible ? "block" : "none",
-          width: "200vw",
-          height: "200vh",
-          backgroundColor: "transparent",
-          position: "fixed",
-          zIndex: 0,
-          top: 0,
-          left: 0
-        }}
+      <Input
+        id="input"
+        autoComplete="off"
+        value={search.text}
+        onChange={onTextChanged}
+        type={"text"}
+        placeholder="Country"
+        style={inputStyle}
       />
-      <div>
-        <Input
-          id="input"
-          autoComplete="off"
-          value={search.text}
-          onChange={onTextChanged}
-          type={"text"}
-          style={inputStyle}
-        />
-      </div>
+      <SubmitButton type="submit" />
       {suggestions.length > 0 && isComponentVisible && (
         < AutoCompleteContainer style={optionsStyle}>
-          {suggestions.map((item: IData) => (
-            <AutoCompleteItem key={item.code}>
+          {suggestions.map((item) => (
+            <AutoCompleteItem key={item}>
               <AutoCompleteItemButton
                 onClick={() => suggestionSelected(item)}
               >
-                {item.name}
+                {item}
               </AutoCompleteItemButton>
             </AutoCompleteItem>
           ))}

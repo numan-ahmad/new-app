@@ -7,11 +7,12 @@ import data from './data.json'
 function App() {
   return (
     <div className="App">
-      <AutoComplete
-        inputStyle={{ backgroundColor: "PaleTurquoise" }}
-        optionsStyle={{ backgroundColor: "LemonChiffon" }}
-        data={data}
-        iconColor="Turquoise" />
+      <header className="App-header">
+        <h1>Autocomplete Field</h1>
+        <AutoComplete
+          inputStyle={{ backgroundColor: "#f1f1f1" }}
+          data={data} />
+      </header>
     </div>
   );
 }

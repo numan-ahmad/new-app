@@ -80,6 +80,8 @@ export const AutoCompleteItemButton = styled.button`
 `;
 export const Input = styled(ValueWrapper)`
   transition: border-color 150ms linear;
+  background-color: #f1f1f1;
+  width: 300px;
 
   &:focus {
     border-color: #0063cc;
